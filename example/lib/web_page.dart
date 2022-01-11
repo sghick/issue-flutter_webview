@@ -4,6 +4,7 @@ import 'package:flutter_native_web/flutter_native_web.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_native_web_example/test_page.dart';
+import 'package:flutter_native_web_example/transitions.dart';
 
 class WebPage extends StatefulWidget {
   @override
@@ -40,9 +41,33 @@ class _WebPageState extends State<WebPage> with WidgetsBindingObserver {
               TextButton(
                   onPressed: () {
                     Navigator.of(context).push(
-                        MaterialPageRoute(builder: (BuildContext context) {
-                      return TestPage();
-                    }));
+                      PageRouteBuilder(
+                        transitionDuration: Duration(milliseconds: 0),
+                        reverseTransitionDuration: Duration(milliseconds: 0),
+                        pageBuilder: (BuildContext context, Animation animation,
+                            Animation secondaryAnimation) {
+                          // return FadeTransition(
+                          //   opacity: animation,
+                          //   child: TestPage(),
+                          // );
+
+                          const Offset topLeft = const Offset(0.0, 0.0);
+                          const Offset topRight = const Offset(1.0, 0.0);
+                          const Offset bottomLeft = const Offset(0.0, 1.0);
+
+                          Offset startOffset = topRight;
+                          Offset endOffset = topLeft;
+
+                          return SlideTransition(
+                            position: Tween<Offset>(
+                              begin: startOffset,
+                              end: endOffset,
+                            ).animate(animation),
+                            child: TestPage(),
+                          );
+                        },
+                      ),
+                    );
                   },
                   child: Text('Native WebView as Widget\n\n')),
               new Container(

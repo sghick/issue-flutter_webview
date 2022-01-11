@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_native_web_example/test_page.dart';
+import 'package:flutter_native_web_example/transitions.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebPage2 extends StatefulWidget {
@@ -26,10 +26,20 @@ class WebPage2State extends State<WebPage2> {
         children: [
           TextButton(
             onPressed: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (BuildContext context) {
-                return TestPage();
-              }));
+              Navigator.of(context).push(
+                PageRouteBuilder(
+                  pageBuilder: (BuildContext context, Animation animation,
+                      Animation secondaryAnimation) {
+                    return SkewTransition(
+                      turns: Tween<double>(
+                        begin: 0,
+                        end: 0,
+                      ).animate(animation),
+                      child: TestPage(),
+                    );
+                  },
+                ),
+              );
             },
             child: Text('Native WebView2 as Widget\n\n'),
           ),

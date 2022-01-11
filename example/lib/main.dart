@@ -41,7 +41,7 @@ class MyHomePage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    new MaterialPageRoute(
+                    CupertinoPageRoute(
                       builder: (context) => WebPage(),
                     ),
                   );
@@ -53,7 +53,7 @@ class MyHomePage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    new MaterialPageRoute(
+                    CupertinoPageRoute(
                       builder: (context) => WebPage2(),
                     ),
                   );
